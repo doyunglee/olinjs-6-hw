@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    input(type='hidden', id='user', value='#{userColor}')
+    h1= title
+    if userColor
+        div(class="profile")
+            img(src=picurl)
+            form(action="/logout", method="get")
+                p 
+                    input(type="submit", name="submit", class="submit", value="Logout")
+                p
+            form(id="colorPick")
+                input(id="color")
+                input(type="submit") 
+        div(id="content")
+            div(id="rcarousel")
+                each photo in photos
+                    div(id=photo.id)
+                        img(src=photo.picture)
+                        form(class="commentForm")
+                            input(id="comment")
+                            input(type="submit")
+            a#ui-carousel-prev(href='#', class="navigation") prev
+            a#ui-carousel-next(href='#', class="navigation") next
+
+    else
+        div(class="profile")
+            form(action="/login", method="get")
+                p 
+                    input(type="submit", name="submit", class="submit", value="Login")
+block js
+    script(src="/javascripts/main.js")
+    script(type='text/javascript', src='javascripts/widget/lib/jquery-1.7.1.min.js')
+    script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.core.min.js')
+    script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.widget.min.js')
+    script(type='text/javascript', src='javascripts/widget/lib/jquery.ui.rcarousel.min.js')
+    script(type='text/javascript')
+        jQuery(function($) {
+            $("#rcarousel").rcarousel({
+                width: 200,
+                height: 200, 
+                visible: 1, 
+                step: 1
+            });
+        });
